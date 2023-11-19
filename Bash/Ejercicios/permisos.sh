@@ -30,7 +30,7 @@ do
 
         # Si el programa ha llegado aquí es porque el usuario ha elegido "s" o "S", así que le vamos a pedir con otro "read" que nos diga dónde está el archivo.
         read -p "Introduce el nombre del archivo, junto con su extensión, del que quieras comprobar los permisos. Si está en una ubicación diferente al directorio actual, introduce su ruta relativa u absoluta: " file
-        # Como puede ser que el usuario introduzca algo que no existe, para que obtengamos un error con el "ls" que tendremos que hacer, vamos a comprobar si lo que nos ha pasado existe de verdad
+        # Como puede ser que el usuario introduzca algo que no existe, para que no obtengamos un error con el "ls" que tendremos que hacer, vamos a comprobar si lo que nos ha pasado existe de verdad
         if [ -e "$file" ] # Con "-e" comprobamos que algo existe (ya sea un directorio, un arhivo .txt, un archivo comprimido o un enlace simbólico); con "-f" verificamos si es un fichero (de "file" en inglés) y con "-d" comprobamos si es una carpeta (de "directory" en inglés).
         then
 
