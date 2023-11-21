@@ -91,6 +91,7 @@
         - '-lt' -> Del inglés 'less than'. Lo usamos para comprobar si un número es menor que otro: 'if [ 2 -lt 7 ]', o con variables, 'if [ $num1 -lt $num2 ]'
         - '-ge' -> Del inglés 'greater or equals'. Lo usamos para comprobar si un número es mayor o igual que otro: 'if [ 8 -ge 5 ]', o con variables, 'if [ $num1 -ge $num2 ]'
         - '-le' -> Del inglés 'less or equals'. Lo usamos para comprobar si un número es menor o igual que otro: 'if [ 4 -le 2 ]', o con variables, 'if [ $num1 -le $num2 ]'
+        - '-ne' -> Del inglés 'not equals'. Lo usamos para comprobar si un número es distinto a otro: 'if [ 1 -ne 3 ]', o con variables, 'if [ $num1 -ne $num2 ]'
 
     Lo más lógico para nosotros hubiera sido usar los operadores matemáticos que ya conocemos como: '=', '>', '<', '>=', '<='; pero su uso está reservado para las cadenas de texto.
     Para texto tenemos las comparaciones léxicográficas (ya sé que es una palabra feísima):
