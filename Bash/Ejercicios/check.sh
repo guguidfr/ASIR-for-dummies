@@ -17,7 +17,7 @@
         - '-f': El elemento existe y es un fichero regular (no es un enlace a otra ubicación/archivo). Devuelve 'true' si ambas concidiones se cumplen
         - '-G': El grupo dueño del elemento coincide con el gid efectivo. Devuelve 'true' si el grupo dueño del elemento es el mismo que el del usuario que ha ejecutado el comando/script.
         - '-h', '-L': El elemento existe y es un enlace simbólico. Devuelve 'true' si ambas condiciones se cumplen (Un enlace simbólico es lo que llamaríamos "Acceso directo" en Windows)
-        - '-O': El dueño del elemento coincide con el uid efectivo. Devuelve 'true' si el usuario dueño del elemento es el mismo que el del usuarip que ha ejecutado el comando/script
+        - '-O': El dueño del elemento coincide con el uid efectivo. Devuelve 'true' si el usuario dueño del elemento es el mismo que el del usuario que ha ejecutado el comando/script
         - '-r': El elemento existe y tenemos permiso de lectura sobre el mismo. Devuelve 'true' si ambas condiciones se cumplen.
         - '-s': El elemento existe y está vacío. Devuelve 'true' si ambas condiciones se cumplen.
         - '-w': El elemento existe y tenemos permiso de escritura. Devuelve 'true' si ambas condiciones se cumplen.
@@ -86,4 +86,128 @@
         Si ejecutamos esos comandos en orden (porque, sí, podemos hacer un 'echo $?' desde la terminal para ver si lo anterior que hemos
         ejecutado ha salido bien), veremos que la salida será un '1'.
 
+    -------------------------------------------------------------------------------------------------------------------------------------------
+
+    Sabiendo todo esto, vamos a hacer un script sencillo que:
+        - Compruebe que el usuario ha pasado solamente un parámetro
+        - Verifique qué es lo que el usuario ha pasado
+        - Si es un archivo, le confirmaremos por mensaje los permisos que tiene y si está vacío.
+        - Si es un directorio, comprobaremos si es dueño del mismo, los permisos que tiene, si está vacío; en caso de que no esté vacío,
+            listaremos lo que haya dentro del mismo de manera recurrente.
+
 com
+
+if [ $# -ne 1 ]
+then
+    echo "Es necesario introducir un solo parámetro"
+    exit 1
+else
+
+    entrada=$1
+    if [ -a "$entrada" ]
+    then
+        
+        if [ -z "$entrada" ]
+        then
+            echo -e "\"$entrada\" está vacío."
+            empty=true
+        fi
+
+        if [ -f "$entrada" ]
+        then
+
+            if [ -r "$entrada" ]
+            then
+                echo -e "Tienes permisos de lectura sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de lectura sobre \"$entrada\""
+            fi
+            
+            if [ -w "$entrada" ]
+            then
+                echo -e "Tienes permisos de escritura sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de escritura sobre \"$entrada\""
+            fi
+            
+            if [ -x "$entrada" ]
+            then
+                echo -e "Tienes permisos de ejecución sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de ejecución sobre \"$entrada\""
+            fi
+
+        elif [[ -d "$entrada" && $empty ]]
+        then
+
+            if [ -O "$entrada" ]
+            then
+                echo "Eres el usuario propietario del directorio"
+            else
+                echo "Otro ususario es propietario del directorio"
+            fi
+
+            if [ -r "$entrada" ]
+            then
+                echo -e "Tienes permisos de lectura sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de lectura sobre \"$entrada\""
+            fi
+            
+            if [ -w "$entrada" ]
+            then
+                echo -e "Tienes permisos de escritura sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de escritura sobre \"$entrada\""
+            fi
+            
+            if [ -x "$entrada" ]
+            then
+                echo -e "Tienes permisos de navegación sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de navegación sobre \"$entrada\""
+            fi
+
+        elif [[ -d "$entrada" && !$empty ]]
+        then
+        
+            if [ -O "$entrada" ]
+            then
+                echo "Eres el usuario propietario del directorio"
+            else
+                echo "Otro ususario es propietario del directorio"
+            fi
+
+            if [ -r "$entrada" ]
+            then
+                echo -e "Tienes permisos de lectura sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de lectura sobre \"$entrada\""
+            fi
+            
+            if [ -w "$entrada" ]
+            then
+                echo -e "Tienes permisos de escritura sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de escritura sobre \"$entrada\""
+            fi
+            
+            if [ -x "$entrada" ]
+            then
+                echo -e "Tienes permisos de navegación sobre \"$entrada\""
+            else
+                echo -e "No tienes permisos de navegación sobre \"$entrada\""
+            fi
+
+            ls -laR "$entrada"
+
+        else
+            echo "Has introducido algo que no sé lo que es"
+        fi
+
+    else
+
+        echo "No sé lo que es lo que has introducido"
+
+    fi
+fi
