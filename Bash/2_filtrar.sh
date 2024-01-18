@@ -119,3 +119,30 @@ totalUsers=$(cat /etc/passwd | awk -F: '{print $1}' | wc -l)
 userNames=$(cat /etc/passwd | awk -F: '{print $1}')
 echo "Se han encontrado $totalUsers usuarios:"
 echo $userNames
+# ----------------------------------------------------------------
+<<'com'
+    Muchas veces dentro de scripts necesitaremos ejecutar comandos que nos devolverán resultados que no queremos mostrar por pantalla.
+    Es aquí donde entra en juego la redirección de salida; salida "estándar" y salida de "errores".
+    La salida estándar es la salida normal del comando, lo que vemos en la pantalla cuando todo sale bien.
+    La salida de errores es el mensaje de error que nos encontramos cuando el comando falla; un ejemplo sencillo es cuando se te olvida añadir "sudo" cuando vas a hacer "apt update", que saldrá un mensaje que te dirá que no tienes permisos de administrador.
+
+    Para redirigir estos mensajes de los comandos, usamos el operador aritmético de "mayor que" (>).
+    En el caso de la salida estándar, usamos el operador por sí solo (>), y para la salida de errores, junto con un "2" (2>); a veces también la llamamos "segunda salida".
+
+    Esta redirección no solamente sirve para ocultar mensajes, también la podemos usar para crear archivos de auditoría o registro; los famosos "logs". Podemos usarlos internamente en nuestro script para mandar los mensajes de error que hayamos podido prever, como que el usuario introduzca algo no válido en una variable o que haya habido un problema al descomprimir un archivo.
+    Quedrá más elegante no mostrar los errores directamente en la ejecución.
+
+    Ahora, para ocultar la salida de comandos, usarmos "el vacío" o "nulo".
+    Si queremos que no se vean todas las líneas de los repositorios cuando hacemos "apt update", redirigiremos el comando a "/dev/null".
+    El comando se nos quedaría así: apt update > /dev/null
+    Para la salida de errores es lo mismo, solo que usando el operador correspondiente: apt update 2> /dev/null
+
+    Hay veces en las que queremos que no se vea ninguna de las salidas; no queremos que se vea que hemos ejecutado un comando.
+    En estos casos, queremos redirigir ambas salidas a "/dev/null", así que usaremos el operador "&1".
+    "&1" lo colocaremos de la siguiente manera: apt update > /dev/null 2>&1
+    De manera más coloquial podríamos decir que usar "&1" es "mandar la segunda salida al mismo sitio que la primera salida".
+
+    Esto por supuesto funciona para redireccionar a archivos, aunque aquí entra en juego usar el operador "simple" (>) o "doble" (>>).
+    Si usamos la redirección simple a un archivo, si no existe se creará, y si ya está, se sobreescribirá de cero.
+    En caso de usarla doble, si el archivo no existe se crea, y si ya está, se añadirá como una línea nueva al final del mismo.
+com
