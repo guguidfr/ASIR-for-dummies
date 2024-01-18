@@ -199,7 +199,9 @@ else
                 echo -e "No tienes permisos de navegación sobre \"$entrada\""
             fi
 
-            ls -laR "$entrada"
+            echo -e "Se mostrarán los subdirectorios dentro de \"$entrada\" sobre los cuales tengas permisos"
+            sleep 3
+            ls -laR "$entrada" 2> /dev/null
 
         else
             echo "Has introducido algo que no sé lo que es"
