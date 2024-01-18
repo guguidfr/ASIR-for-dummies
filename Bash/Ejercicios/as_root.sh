@@ -48,7 +48,7 @@ com
 if [ $(id -u) -eq 0 ] # Para esta condición usamos la salida del comando para la comparación
 then
     echo "Estás ejecutando este script como root"
-    exit 0 # En este caso salimos con código '0' porquie todo ha ido correctamente
+    exit 0 # En este caso salimos con código '0' porque todo ha ido correctamente
 else
     echo "No eres superusuario"
     exit 1 # Como es necesario que lo ejecute 'root', salimos con código '1'
