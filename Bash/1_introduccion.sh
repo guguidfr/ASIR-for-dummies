@@ -67,6 +67,7 @@ echo "--------------------------------------------------------------------------
 
     - Incremento (++) -> Aumenta en 1 el valor de la variable. [((num++))]
     - Decremento (--) -> Disminuye en 1 el valor de la variable. [((num--))]
+    (En estos casos de incremento y decremento, la posición de los signos importa, ya que indica qué se hace primero: si trabajar con la variable, o sumar o restar)
     - Potencia (**) -> Eleva un número a la potencia de otro. [((num1**num2))]
         En este ejemplo de la potencia, si:
         num1=2
@@ -94,8 +95,8 @@ echo "Resta -> $((num1-num2))"
 echo "Multiplicación -> $((num1*num2))"
 echo "División -> $((num1/num2))"
 echo "Módulo -> $((num1%num2))"
-echo "Incremento -> $((num1++))"
-echo "Decremento -> $((num1--))"
+echo "Incremento -> $((++num1))"
+echo "Decremento -> $((--num1))"
 echo "Potencia -> $((num1**num2))"
 echo "Asignación de suma-> $((num1+=num2))"
 echo "--------------------------------------------------------------------------------------------------------------"
